@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "ng-scrum",
+      "public": "dist/ng-scrum",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

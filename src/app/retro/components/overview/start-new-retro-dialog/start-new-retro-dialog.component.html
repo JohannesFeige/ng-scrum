@@ -1,0 +1,20 @@
+<h1>Start new Retro</h1>
+<form [formGroup]="newRetroForm" (ngSubmit)="submitHandler()">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Sprint Title</mat-label>
+      <input matInput placeholder="Sprint Title" formControlName="sprintTitle" cdkFocusInitial />
+      <mat-error *ngIf="!newRetroForm.controls['sprintTitle'].valid && newRetroForm.controls['sprintTitle'].touched">
+        Required field
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button (click)="cancelClickHandler()" color="primary">
+      Cancel
+    </button>
+    <button mat-button type="submit" color="primary">
+      Start
+    </button>
+  </div>
+</form>

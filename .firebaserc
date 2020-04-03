@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ng-scrum": {
+      "hosting": {
+        "ng-scrum": [
+          "ng-scrum"
+        ]
+      }
+    }
+  }
+}

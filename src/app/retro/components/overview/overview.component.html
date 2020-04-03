@@ -1,0 +1,14 @@
+<h2>Overview</h2>
+
+<mat-list>
+  <mat-list-item *ngFor="let retro of retros$ | async">
+    {{ retro.title }}
+    <button mat-icon-button color="primary" (click)="deleteRetro(retro.key)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>
+
+<button mat-raised-button color="primary" (click)="newRetroClickHandler()">
+  Start new Retro
+</button>
