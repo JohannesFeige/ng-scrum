@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { Retro } from '../../models/retro.model';
+import { RetroService } from '../../services/retro.service';
 
 @Component({
   selector: 'app-retro',
@@ -8,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./retro.component.scss'],
 })
 export class RetroComponent implements OnInit {
+  retro: BehaviorSubject<Retro>;
   startFormGroup: FormGroup;
   keepFormGroup: FormGroup;
   stopFormGroup: FormGroup;
@@ -15,12 +19,13 @@ export class RetroComponent implements OnInit {
   rankFormGroup: FormGroup;
 
   retroKey: string;
-  constructor(private fb: FormBuilder, private route: ActivatedRoute) {}
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private retroService: RetroService) {}
 
   ngOnInit(): void {
     this.initForm();
 
     this.retroKey = this.route.snapshot.paramMap.get('key');
+    this.retro = this.retroService.getRetro(this.retroKey);
   }
 
   private initForm() {

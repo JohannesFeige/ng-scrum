@@ -56,8 +56,10 @@ export class RetroService {
     return retroKey;
   }
 
-  getRetro(retroKey: string): Observable<Retro> {
-    return this.repo.object<Retro>(getRetroPath(retroKey)).snapshotChanges().pipe(map(this.mapSnapshotToRetro));
+  getRetro(retroKey: string): BehaviorSubject<Retro> {
+    return this.getAsBehaviouSubject(
+      this.repo.object<Retro>(getRetroPath(retroKey)).snapshotChanges().pipe(map(this.mapSnapshotToRetro))
+    );
   }
 
   deleteRetro(retroKey: string): void {
@@ -69,19 +71,12 @@ export class RetroService {
   }
 
   getTopics(retroKey: string, topicType: 'start' | 'keep' | 'stop'): BehaviorSubject<Topic[]> {
-    const topics: BehaviorSubject<Topic[]> = new BehaviorSubject([]);
-
-    this.repo
-      .list<Topic>(getTopicPath(topicType)(retroKey))
-      .snapshotChanges()
-      .pipe(map((items) => items.map(this.mapSnapshotToObject)))
-      .subscribe({
-        complete: () => topics.complete(),
-        error: (x) => topics.error(x),
-        next: (x) => topics.next(x),
-      });
-
-    return topics;
+    return this.getAsBehaviouSubject(
+      this.repo
+        .list<Topic>(getTopicPath(topicType)(retroKey))
+        .snapshotChanges()
+        .pipe(map((items) => items.map(this.mapSnapshotToObject)))
+    );
   }
 
   pushTopic(retroKey: string, topic: Topic): void {
@@ -94,6 +89,17 @@ export class RetroService {
 
   getRetroSecret(retroKey: string): string {
     return window.localStorage.getItem(retroKey);
+  }
+
+  private getAsBehaviouSubject<T>(observable: Observable<T>) {
+    const behaviourSubject: BehaviorSubject<T> = new BehaviorSubject({}) as BehaviorSubject<T>;
+    observable.subscribe({
+      complete: () => behaviourSubject.complete(),
+      error: (x) => behaviourSubject.error(x),
+      next: (x) => behaviourSubject.next(x),
+    });
+
+    return behaviourSubject;
   }
 
   private mapSnapshotToObject<T>(snapshotAction: SnapshotAction<T>): T {
