@@ -9,7 +9,7 @@ import {
 } from './start-new-retro-dialog/start-new-retro-dialog.component';
 import { Router } from '@angular/router';
 import { RetroService } from '../../services/retro.service';
-import Retro from '../../models/retro.model';
+import { Retro } from '../../models/retro.model';
 import {
   AlertDialogComponent,
   AlertDialogData,

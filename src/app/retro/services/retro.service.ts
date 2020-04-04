@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import Retro from '../models/retro.model';
+import { Retro } from '../models/retro.model';
 import 'firebase/database';
 import { AngularFireDatabase, SnapshotAction, AngularFireList } from '@angular/fire/database';
 import { map } from 'rxjs/operators';
-import Keep from '../models/keep.model';
+import { Keep } from '../models/keep.model';
 import { CipherService } from './cipher.service';
-import Topic from '../models/topic.model';
+import { Topic } from '../models/topic.model';
 
 const retrosPath = 'retros';
 const getRetroPath = (retroKey: string) => `${retrosPath}/${retroKey}`;
@@ -57,10 +57,7 @@ export class RetroService {
   }
 
   getRetro(retroKey: string): Observable<Retro> {
-    return this.repo
-      .object<Retro>(getRetroPath(retroKey))
-      .snapshotChanges()
-      .pipe(map(this.mapSnapshotToRetro));
+    return this.repo.object<Retro>(getRetroPath(retroKey)).snapshotChanges().pipe(map(this.mapSnapshotToRetro));
   }
 
   deleteRetro(retroKey: string): void {

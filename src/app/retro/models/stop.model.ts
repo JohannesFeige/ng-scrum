@@ -1,7 +1,5 @@
-import Topic from './topic.model';
+import { Topic } from './topic.model';
 
-type Stop = Topic & {
+export type Stop = Topic & {
   type: 'stop';
 };
-
-export default Stop;

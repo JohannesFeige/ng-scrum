@@ -1,0 +1,22 @@
+<mat-horizontal-stepper #stepper>
+  <mat-step [stepControl]="startFormGroup">
+    <ng-template matStepLabel>Start</ng-template>
+    <app-collection-step [type]="'start'" [retroKey]="retroKey"></app-collection-step>
+  </mat-step>
+  <mat-step [stepControl]="keepFormGroup">
+    <ng-template matStepLabel>Keep</ng-template>
+    <app-collection-step [type]="'keep'" [retroKey]="retroKey"></app-collection-step>
+  </mat-step>
+  <mat-step [stepControl]="stopFormGroup">
+    <ng-template matStepLabel>Stop</ng-template>
+    <app-collection-step [type]="'stop'" [retroKey]="retroKey"></app-collection-step>
+  </mat-step>
+  <mat-step [stepControl]="consolidateFormGroup">
+    <ng-template matStepLabel>Consolidate</ng-template>
+    <app-consolidate-step></app-consolidate-step>
+  </mat-step>
+  <mat-step [stepControl]="rankFormGroup">
+    <ng-template matStepLabel>Rank</ng-template>
+    <app-rank-step></app-rank-step>
+  </mat-step>
+</mat-horizontal-stepper>

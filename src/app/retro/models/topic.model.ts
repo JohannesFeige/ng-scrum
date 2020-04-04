@@ -1,7 +1,7 @@
-type Topic = {
+export type Topic = {
   key?: string;
   topic: string;
-  type: 'start' | 'keep' | 'stop';
+  type: TopicType;
 };
 
-export default Topic;
+export type TopicType = 'start' | 'keep' | 'stop';

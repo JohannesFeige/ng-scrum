@@ -1,0 +1,30 @@
+<h1>{{ title }}</h1>
+<div fxLayout="row">
+  <div fxFlex="1 1 75%">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div class="topic" *ngFor="let topic of topics | async">
+        {{ topic.topic }}
+      </div>
+    </div>
+  </div>
+  <div fxFlex="1 1 25%" fxLayout="column" fxLayoutGap="24px">
+    <ng-container *ngTemplateOutlet="appendTopic"></ng-container>
+    <div appendTopic></div>
+    <div>Stopwatch</div>
+  </div>
+</div>
+
+<ng-template #appendTopic>
+  <form #topicForm="ngForm" [formGroup]="form" (submit)="topicSubmitHandler()">
+    <mat-form-field class="form-element">
+      <mat-label>Topic</mat-label>
+      <textarea matInput placeholder="Topic" formControlName="topic" cdkFocusInitial rows="5"></textarea>
+      <mat-error *ngIf="!form.controls['topic'].valid && form.controls['topic'].touched">
+        Required field
+      </mat-error>
+    </mat-form-field>
+    <div class="form-element">
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </div>
+  </form>
+</ng-template>

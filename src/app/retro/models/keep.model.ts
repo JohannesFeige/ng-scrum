@@ -1,7 +1,5 @@
-import Topic from './topic.model';
+import { Topic } from './topic.model';
 
-type Keep = Topic & {
+export type Keep = Topic & {
   type: 'keep';
 };
-
-export default Keep;
