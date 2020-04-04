@@ -13,34 +13,29 @@ export class CollectionStepComponent implements OnInit {
   @Input() type: TopicType;
   @Input() retroKey: string;
 
-  @ViewChild('topicForm') formRef: FormGroupDirective;
+  @ViewChild('form') formRef: FormGroupDirective;
 
   title: string;
   pushFn: (retroKey: string) => void;
   getFn: (retroKey: string) => void;
-  form: FormGroup;
+  topic: string;
   topics: BehaviorSubject<Topic[]>;
 
   constructor(private fb: FormBuilder, private retroService: RetroService) {}
 
   ngOnInit(): void {
     this.init();
-
-    this.form = this.fb.group({
-      topic: ['', Validators.required],
-    });
-
     this.topics = this.retroService.getTopics(this.retroKey, this.type);
   }
 
   topicSubmitHandler() {
     const topic: Topic = {
       type: this.type,
-      topic: this.form.value.topic,
+      topic: this.topic,
     };
 
     this.retroService.pushTopic(this.retroKey, topic);
-    this.formRef.resetForm();
+    this.topic = null;
   }
 
   private init() {

@@ -7,7 +7,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./start-new-retro-dialog.component.scss'],
 })
 export class StartNewRetroDialogComponent implements OnInit {
-  newRetroForm: FormGroup;
+  sprintTitle: string;
   constructor(
     public dialogRef: MatDialogRef<StartNewRetroDialogComponent, StartNewRetroDialogResult>,
     private fb: FormBuilder,
@@ -15,15 +15,13 @@ export class StartNewRetroDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.newRetroForm = this.fb.group({
-      sprintTitle: [this.data?.sprintTitle ?? '', Validators.required],
-    });
+    this.sprintTitle = this.data?.sprintTitle ?? null;
   }
 
   submitHandler() {
-    if (this.newRetroForm.dirty && this.newRetroForm.valid) {
+    if (this.sprintTitle) {
       this.dialogRef.close({
-        sprintTitle: this.newRetroForm.value.sprintTitle,
+        sprintTitle: this.sprintTitle,
       });
     }
   }

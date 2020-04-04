@@ -7,23 +7,20 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./enter-retro-secret-dialog.component.scss'],
 })
 export class EnterRetroSecretDialogComponent implements OnInit {
-  form: FormGroup;
+  retroSecret: string;
   constructor(
     public dialogRef: MatDialogRef<EnterRetroSecretDialogComponent, EnterRetroSecretDialogResult>,
-    private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) private data: EnterRetroSecretDialogData
   ) {}
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      retroSecret: [this.data?.retroSecret ?? '', Validators.required],
-    });
+    this.retroSecret = this.data?.retroSecret ?? null;
   }
 
   submitHandler() {
-    if (this.form.dirty && this.form.valid) {
+    if (this.retroSecret) {
       this.dialogRef.close({
-        retroSecret: this.form.value.retroSecret,
+        retroSecret: this.retroSecret,
       });
     }
   }
