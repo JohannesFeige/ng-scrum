@@ -23,10 +23,6 @@ export class EnterRetroSecretDialogComponent implements OnInit {
       });
     }
   }
-
-  cancelClickHandler() {
-    this.dialogRef.close('cancel');
-  }
 }
 
 export type EnterRetroSecretDialogData = {

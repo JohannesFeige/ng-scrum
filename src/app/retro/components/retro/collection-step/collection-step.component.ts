@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormGroupDirective } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { Topic, TopicType } from '../../../models/topic.model';
@@ -14,6 +14,8 @@ export class CollectionStepComponent implements OnInit {
   @Input() retroKey: string;
 
   @ViewChild('form') formRef: FormGroupDirective;
+  @Output() next = new EventEmitter();
+  @Output() previous = new EventEmitter();
 
   title: string;
   pushFn: (retroKey: string) => void;

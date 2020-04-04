@@ -1,5 +1,5 @@
 <p>{{ retro?.value.title }}</p>
-<mat-horizontal-stepper #stepper>
+<mat-horizontal-stepper linear #stepper>
   <mat-step [stepControl]="startFormGroup">
     <ng-template matStepLabel>Start</ng-template>
     <app-collection-step [type]="'start'" [retroKey]="retroKey"></app-collection-step>

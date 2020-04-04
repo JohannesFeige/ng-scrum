@@ -23,10 +23,6 @@ export class StartNewRetroDialogComponent implements OnInit {
       });
     }
   }
-
-  cancelClickHandler() {
-    this.dialogRef.close('cancel');
-  }
 }
 
 export type StartNewRetroDialogData = {
