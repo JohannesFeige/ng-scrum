@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { FormGroupDirective } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { Topic, TopicType } from '../../../models/topic.model';
 import { RetroService } from '../../../services/retro.service';
@@ -21,7 +21,7 @@ export class CollectionStepComponent implements OnInit {
   topic: string;
   topics: BehaviorSubject<Topic[]>;
 
-  constructor(private fb: FormBuilder, private retroService: RetroService) {}
+  constructor(private retroService: RetroService) {}
 
   ngOnInit(): void {
     this.init();

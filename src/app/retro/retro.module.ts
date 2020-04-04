@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { OverviewComponent } from './components/overview/overview.component';
 import { RetroRoutingModule } from './retro-routing.module';
 import { EnterRetroSecretDialogComponent } from './components/overview/enter-retro-secret-dialog/enter-retro-secret-dialog.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
@@ -34,6 +34,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FlexLayoutModule,
     RetroRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,

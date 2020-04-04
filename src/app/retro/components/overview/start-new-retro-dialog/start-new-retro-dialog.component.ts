@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   templateUrl: './start-new-retro-dialog.component.html',
@@ -10,7 +9,6 @@ export class StartNewRetroDialogComponent implements OnInit {
   sprintTitle: string;
   constructor(
     public dialogRef: MatDialogRef<StartNewRetroDialogComponent, StartNewRetroDialogResult>,
-    private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) private data: StartNewRetroDialogData
   ) {}
 
