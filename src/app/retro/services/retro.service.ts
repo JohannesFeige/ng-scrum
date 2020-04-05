@@ -13,7 +13,7 @@ const getRetroPath = (retroKey: string) => `${retrosPath}/${retroKey}`;
 const getKeepPath = (retroKey: string) => `${getRetroPath(retroKey)}/keep`;
 const getStartPath = (retroKey: string) => `${getRetroPath(retroKey)}/start`;
 const getStopPath = (retroKey: string) => `${getRetroPath(retroKey)}/stop`;
-const getTopicPath = (type: 'start' | 'keep' | 'stop') => {
+const getTopicsPath = (type: 'start' | 'keep' | 'stop') => {
   switch (type) {
     case 'start':
       return getStartPath;
@@ -81,7 +81,7 @@ export class RetroService {
     const secret = this.getRetroSecret(retroKey);
     return this.getAsBehaviouSubjectArray(
       this.repo
-        .list<Topic>(getTopicPath(topicType)(retroKey))
+        .list<Topic>(getTopicsPath(topicType)(retroKey))
         .snapshotChanges()
         .pipe(
           map((items) => items.map(this.mapSnapshotToObject)),
@@ -98,7 +98,13 @@ export class RetroService {
   pushTopic(retroKey: string, topic: Topic): void {
     const secret = this.getRetroSecret(retroKey);
     topic.topic = this.cipher.encrypt(secret, topic.topic);
-    this.repo.list(getTopicPath(topic.type)(retroKey)).push(topic);
+    this.repo.list(getTopicsPath(topic.type)(retroKey)).push(topic);
+  }
+
+  updateTopicDisabled(retroKey: string, topic: Topic): void {
+    const secret = this.getRetroSecret(retroKey);
+    topic.topic = this.cipher.encrypt(secret, topic.topic);
+    this.repo.object<Topic>(`${getTopicsPath(topic.type)(retroKey)}/${topic.key}`).update({ disabled: topic.disabled });
   }
 
   setRetroSecret(retroKey: string, retroSecret: string): void {

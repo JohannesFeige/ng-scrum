@@ -1,5 +1,6 @@
 export type Topic = {
   key?: string;
+  disabled?: boolean;
   topic: string;
   type: TopicType;
 };

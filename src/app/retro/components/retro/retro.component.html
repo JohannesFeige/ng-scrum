@@ -24,7 +24,11 @@
   </mat-step>
   <mat-step [stepControl]="consolidateFormGroup">
     <ng-template matStepLabel>Consolidate</ng-template>
-    <app-consolidate-step (next)="nextClickHandler()" (previous)="previousClickHandler()"></app-consolidate-step>
+    <app-consolidate-step
+      [retroKey]="retroKey"
+      (next)="nextClickHandler()"
+      (previous)="previousClickHandler()"
+    ></app-consolidate-step>
   </mat-step>
   <mat-step [stepControl]="rankFormGroup">
     <ng-template matStepLabel>Rank</ng-template>

@@ -4,8 +4,40 @@
       <mat-icon inline="false">arrow_back_ios</mat-icon>
     </button>
   </div>
-  <div fxLayout="row" fxFlex="1 1 90%">
-    <p>consolidate-step works!</p>
+  <div fxLayout="row" fxFlex="1 1 90%" fxLayoutGap="24px">
+    <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
+      <h2 class="start">Start</h2>
+      <div
+        *ngFor="let start of starts$ | async"
+        class="topic"
+        [class.disabled]="start.disabled"
+        (click)="toggleTopicDisabled(start)"
+      >
+        <span>{{ start.topic }}</span>
+      </div>
+    </div>
+    <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
+      <h2 class="keep">Keep</h2>
+      <div
+        *ngFor="let keep of keeps$ | async"
+        class="topic"
+        [class.disabled]="keep.disabled"
+        (click)="toggleTopicDisabled(keep)"
+      >
+        <span>{{ keep.topic }}</span>
+      </div>
+    </div>
+    <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
+      <h2 class="stop">Stop</h2>
+      <div
+        *ngFor="let stop of stops$ | async"
+        class="topic"
+        [class.disabled]="stop.disabled"
+        (click)="toggleTopicDisabled(stop)"
+      >
+        <span>{{ stop.topic }}</span>
+      </div>
+    </div>
   </div>
   <div fxFlex="1 1 5%" fxLayoutAlign="center center">
     <button *ngIf="hasNext()" mat-mini-fab color="primary" (click)="next.emit()">
