@@ -57,7 +57,7 @@ export class RetroService {
   }
 
   getRetro(retroKey: string): BehaviorSubject<Retro> {
-    return this.getAsBehaviouSubject(
+    return this.getAsBehaviouSubjectObject(
       this.repo.object<Retro>(getRetroPath(retroKey)).snapshotChanges().pipe(map(this.mapSnapshotToRetro))
     );
   }
@@ -77,21 +77,27 @@ export class RetroService {
     this.repo.object(getRetroPath(retroKey)).remove();
   }
 
-  pushKeep(retroKey: string, keep: Keep): void {
-    this.repo.list(getKeepPath(retroKey)).push(keep);
-  }
-
   getTopics(retroKey: string, topicType: 'start' | 'keep' | 'stop'): BehaviorSubject<Topic[]> {
-    return this.getAsBehaviouSubject(
+    const secret = this.getRetroSecret(retroKey);
+    return this.getAsBehaviouSubjectArray(
       this.repo
         .list<Topic>(getTopicPath(topicType)(retroKey))
         .snapshotChanges()
-        .pipe(map((items) => items.map(this.mapSnapshotToObject))),
-      []
+        .pipe(
+          map((items) => items.map(this.mapSnapshotToObject)),
+          map((topics) =>
+            topics.map((topic) => {
+              topic.topic = this.cipher.decrypt(secret, topic.topic);
+              return topic;
+            })
+          )
+        )
     );
   }
 
   pushTopic(retroKey: string, topic: Topic): void {
+    const secret = this.getRetroSecret(retroKey);
+    topic.topic = this.cipher.encrypt(secret, topic.topic);
     this.repo.list(getTopicPath(topic.type)(retroKey)).push(topic);
   }
 
@@ -103,8 +109,19 @@ export class RetroService {
     return window.localStorage.getItem(retroKey);
   }
 
-  private getAsBehaviouSubject<T>(observable: Observable<T>, initObject: T = {} as T) {
-    const behaviourSubject: BehaviorSubject<T> = new BehaviorSubject(initObject);
+  private getAsBehaviouSubjectObject<T>(observable: Observable<T>) {
+    const behaviourSubject: BehaviorSubject<T> = new BehaviorSubject({}) as BehaviorSubject<T>;
+    observable.subscribe({
+      complete: () => behaviourSubject.complete(),
+      error: (x) => behaviourSubject.error(x),
+      next: (x) => behaviourSubject.next(x),
+    });
+
+    return behaviourSubject;
+  }
+
+  private getAsBehaviouSubjectArray<T>(observable: Observable<T[]>) {
+    const behaviourSubject: BehaviorSubject<T[]> = new BehaviorSubject([]) as BehaviorSubject<T[]>;
     observable.subscribe({
       complete: () => behaviourSubject.complete(),
       error: (x) => behaviourSubject.error(x),

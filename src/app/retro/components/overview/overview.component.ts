@@ -15,6 +15,10 @@ import {
   AlertDialogData,
   AlertDialogResult,
 } from 'src/app/components/alert-dialog/alert-dialog.component';
+import { TopicType, Topic } from '../../models/topic.model';
+import { Start } from '../../models/start.model';
+import { Keep } from '../../models/keep.model';
+import { Stop } from '../../models/stop.model';
 
 @Component({
   selector: 'app-overview',
@@ -48,6 +52,8 @@ export class OverviewComponent implements OnInit {
           title: sprintTitle,
         });
 
+        this.generateMockData(retroKey);
+
         this.router.navigate([`retro/${retroKey}`]);
       });
   }
@@ -68,5 +74,24 @@ export class OverviewComponent implements OnInit {
         }
         this.retroService.deleteRetro(retroKey);
       });
+  }
+
+  private generateMockData(retroKey: string) {
+    function generateTopic(type: TopicType, amount: number): Topic[] {
+      const result: Topic[] = [];
+      for (let index = 1; index <= amount; index++) {
+        const topic: Topic = {
+          type,
+          topic: `Important ${type} Topic ${index}`,
+        };
+
+        result.push(topic);
+      }
+      return result;
+    }
+
+    generateTopic('start', 4).forEach((topic) => this.retroService.pushTopic(retroKey, topic));
+    generateTopic('keep', 7).forEach((topic) => this.retroService.pushTopic(retroKey, topic));
+    generateTopic('stop', 6).forEach((topic) => this.retroService.pushTopic(retroKey, topic));
   }
 }

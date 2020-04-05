@@ -2,7 +2,9 @@
 
 <mat-list>
   <mat-list-item *ngFor="let retro of retros$ | async">
-    {{ retro.title }}
+    <a [routerLink]="[retro.key]">
+      {{ retro.title }}
+    </a>
     <button mat-icon-button color="primary" (click)="deleteRetro(retro.key)">
       <mat-icon>delete</mat-icon>
     </button>
