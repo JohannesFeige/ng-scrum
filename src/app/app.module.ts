@@ -12,15 +12,20 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 import { environment } from 'src/environments/environment';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, NotFoundComponent, AlertDialogComponent],
+  declarations: [AppComponent, NotFoundComponent, AlertDialogComponent, HeaderComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatDialogModule,
+    MatIconModule,
+    MatToolbarModule,
     RetroModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase, 'scrum'),
