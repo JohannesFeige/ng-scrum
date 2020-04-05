@@ -102,8 +102,6 @@ export class RetroService {
   }
 
   updateTopicDisabled(retroKey: string, topic: Topic): void {
-    const secret = this.getRetroSecret(retroKey);
-    topic.topic = this.cipher.encrypt(secret, topic.topic);
     this.repo.object<Topic>(`${getTopicsPath(topic.type)(retroKey)}/${topic.key}`).update({ disabled: topic.disabled });
   }
 
