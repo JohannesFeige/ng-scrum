@@ -30,42 +30,43 @@ export class OverviewComponent implements OnInit {
   }
 
   newRetroClickHandler(): void {
-    const dialogRef = this.dialog.open<
-      StartNewRetroDialogComponent,
-      StartNewRetroDialogData,
-      StartNewRetroDialogResult
-    >(StartNewRetroDialogComponent, {
-      width: '250px',
-    });
+    this.dialog
+      .open<StartNewRetroDialogComponent, StartNewRetroDialogData, StartNewRetroDialogResult>(
+        StartNewRetroDialogComponent,
+        {
+          width: '250px',
+        }
+      )
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result || result === 'cancel') {
+          return;
+        }
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (!result || result === 'cancel') {
-        return;
-      }
+        const sprintTitle = (result as StartNewRetroDialogData).sprintTitle;
+        const retroKey = this.retroService.pushRetro({
+          title: sprintTitle,
+        });
 
-      const sprintTitle = (result as StartNewRetroDialogData).sprintTitle;
-      const retroKey = this.retroService.pushRetro({
-        title: sprintTitle,
+        this.router.navigate([`retro/${retroKey}`]);
       });
-
-      this.router.navigate([`retro/${retroKey}`]);
-    });
   }
 
   deleteRetro(retroKey: string): void {
-    const dialogRef = this.dialog.open<AlertDialogComponent, AlertDialogData, AlertDialogResult>(AlertDialogComponent, {
-      width: '250px',
-      data: {
-        title: 'Delete Retro',
-        text: 'Do you really want to delete this item?',
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (!result) {
-        return;
-      }
-      this.retroService.deleteRetro(retroKey);
-    });
+    this.dialog
+      .open<AlertDialogComponent, AlertDialogData, AlertDialogResult>(AlertDialogComponent, {
+        width: '250px',
+        data: {
+          title: 'Delete Retro',
+          text: 'Do you really want to delete this item?',
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result) {
+          return;
+        }
+        this.retroService.deleteRetro(retroKey);
+      });
   }
 }

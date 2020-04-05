@@ -1,20 +1,30 @@
 <h1>{{ title }}</h1>
-<!-- <div fxLayout="column"> -->
 <div fxLayout="row">
-  <div fxFlex="1 1 75%">
-    <div fxLayout="row" fxLayoutGap="8px">
-      <div class="topic" *ngFor="let topic of topics | async">
-        {{ topic.topic }}
+  <div fxLayout="column" fxFlex="1 1 5%" fxLayoutAlign="center center">
+    <button *ngIf="hasPrevious()" mat-mini-fab color="primary" (click)="previous.emit()">
+      <mat-icon inline="false">arrow_back_ios</mat-icon>
+    </button>
+  </div>
+  <div fxLayout="row" fxFlex="1 1 90%">
+    <div fxFlex="1 1 75%">
+      <div fxLayout="row" fxLayoutGap="8px">
+        <div class="topic" *ngFor="let topic of topics | async">
+          {{ topic.topic }}
+        </div>
       </div>
     </div>
+    <div fxFlex="1 1 25%" fxLayout="column" fxLayoutGap="24px">
+      <ng-container *ngTemplateOutlet="appendTopic"></ng-container>
+      <div appendTopic></div>
+      <div>Stopwatch</div>
+    </div>
   </div>
-  <div fxFlex="1 1 25%" fxLayout="column" fxLayoutGap="24px">
-    <ng-container *ngTemplateOutlet="appendTopic"></ng-container>
-    <div appendTopic></div>
-    <div>Stopwatch</div>
+  <div fxFlex="1 1 5%" fxLayoutAlign="center center">
+    <button *ngIf="hasNext()" mat-mini-fab color="primary" (click)="next.emit()">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
   </div>
 </div>
-<!-- </div> -->
 
 <ng-template #appendTopic>
   <form #form="ngForm" (submit)="topicSubmitHandler()">

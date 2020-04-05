@@ -75,7 +75,8 @@ export class RetroService {
       this.repo
         .list<Topic>(getTopicPath(topicType)(retroKey))
         .snapshotChanges()
-        .pipe(map((items) => items.map(this.mapSnapshotToObject)))
+        .pipe(map((items) => items.map(this.mapSnapshotToObject))),
+      []
     );
   }
 
@@ -91,8 +92,8 @@ export class RetroService {
     return window.localStorage.getItem(retroKey);
   }
 
-  private getAsBehaviouSubject<T>(observable: Observable<T>) {
-    const behaviourSubject: BehaviorSubject<T> = new BehaviorSubject({}) as BehaviorSubject<T>;
+  private getAsBehaviouSubject<T>(observable: Observable<T>, initObject: T = {} as T) {
+    const behaviourSubject: BehaviorSubject<T> = new BehaviorSubject(initObject);
     observable.subscribe({
       complete: () => behaviourSubject.complete(),
       error: (x) => behaviourSubject.error(x),

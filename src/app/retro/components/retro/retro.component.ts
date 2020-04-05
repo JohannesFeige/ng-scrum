@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Retro } from '../../models/retro.model';
 import { RetroService } from '../../services/retro.service';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-retro',
@@ -11,6 +12,10 @@ import { RetroService } from '../../services/retro.service';
   styleUrls: ['./retro.component.scss'],
 })
 export class RetroComponent implements OnInit {
+  @ViewChild('stepper') private stepper: MatStepper;
+
+  isLinear = true;
+
   retro: BehaviorSubject<Retro>;
   startFormGroup: FormGroup;
   keepFormGroup: FormGroup;
@@ -30,19 +35,29 @@ export class RetroComponent implements OnInit {
 
   private initForm() {
     this.startFormGroup = this.fb.group({
-      startCtrl: ['', Validators.required],
+      startCtrl: [''],
     });
     this.keepFormGroup = this.fb.group({
-      keepCtrl: ['', Validators.required],
+      keepCtrl: [''],
     });
     this.stopFormGroup = this.fb.group({
-      stopCtrl: ['', Validators.required],
+      stopCtrl: [''],
     });
     this.consolidateFormGroup = this.fb.group({
-      consolidateCtrl: ['', Validators.required],
+      consolidateCtrl: [''],
     });
     this.rankFormGroup = this.fb.group({
-      rankCtrl: ['', Validators.required],
+      rankCtrl: [''],
     });
+  }
+
+  nextClickHandler() {
+    this.stepper.selected.completed = false;
+    this.stepper.next();
+  }
+
+  previousClickHandler() {
+    this.stepper.selected.completed = false;
+    this.stepper.previous();
   }
 }

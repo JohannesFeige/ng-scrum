@@ -40,6 +40,14 @@ export class CollectionStepComponent implements OnInit {
     this.topic = null;
   }
 
+  hasNext() {
+    return this.next.observers.length;
+  }
+
+  hasPrevious() {
+    return this.previous.observers.length;
+  }
+
   private init() {
     switch (this.type) {
       case 'start':
