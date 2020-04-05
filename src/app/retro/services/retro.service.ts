@@ -62,6 +62,17 @@ export class RetroService {
     );
   }
 
+  retroExists(retroKey: string): Observable<boolean> {
+    return this.repo
+      .object<Retro>(getRetroPath(retroKey))
+      .snapshotChanges()
+      .pipe(
+        map((value) => {
+          return !!value.key;
+        })
+      );
+  }
+
   deleteRetro(retroKey: string): void {
     this.repo.object(getRetroPath(retroKey)).remove();
   }

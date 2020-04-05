@@ -22,6 +22,7 @@ export class CanActivateRetroGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const retroKey = next.params.key;
+
     if (this.retroService.getRetroSecret(retroKey)) {
       return true;
     }

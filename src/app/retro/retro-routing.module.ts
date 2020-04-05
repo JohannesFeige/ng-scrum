@@ -3,13 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { OverviewComponent } from './components/overview/overview.component';
 import { RetroComponent } from './components/retro/retro.component';
 import { CanActivateRetroGuard } from './guards/can-activate-retro.guard';
+import { RetroExistsGuard } from './guards/retro-exists.guard';
 
 const routes: Routes = [
   {
     path: 'retro',
     children: [
       { path: '', component: OverviewComponent },
-      { path: ':key', component: RetroComponent, canActivate: [CanActivateRetroGuard] },
+      { path: ':key', component: RetroComponent, canActivate: [RetroExistsGuard, CanActivateRetroGuard] },
     ],
   },
 ];
