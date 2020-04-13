@@ -62,6 +62,10 @@ export class RetroService {
     );
   }
 
+  updateRetroCurrentSteop(retroKey: string, currentStep: number): void {
+    this.repo.object<Retro>(getRetroPath(retroKey)).update({ currentStep });
+  }
+
   retroExists(retroKey: string): Observable<boolean> {
     return this.repo
       .object<Retro>(getRetroPath(retroKey))

@@ -14,9 +14,7 @@ import { MatStepper } from '@angular/material/stepper';
 export class RetroComponent implements OnInit {
   @ViewChild('stepper') private stepper: MatStepper;
 
-  isLinear = true;
-
-  retro: BehaviorSubject<Retro>;
+  retro$: BehaviorSubject<Retro>;
   startFormGroup: FormGroup;
   keepFormGroup: FormGroup;
   stopFormGroup: FormGroup;
@@ -30,7 +28,13 @@ export class RetroComponent implements OnInit {
     this.initForm();
 
     this.retroKey = this.route.snapshot.paramMap.get('key');
-    this.retro = this.retroService.getRetro(this.retroKey);
+    this.retro$ = this.retroService.getRetro(this.retroKey);
+
+    this.retro$.subscribe((value) => {
+      if (value && value.currentStep != null) {
+        this.stepper.selectedIndex = value.currentStep;
+      }
+    });
   }
 
   private initForm() {
@@ -52,12 +56,10 @@ export class RetroComponent implements OnInit {
   }
 
   nextClickHandler() {
-    this.stepper.selected.completed = false;
-    this.stepper.next();
+    this.retroService.updateRetroCurrentSteop(this.retroKey, this.retro$.value.currentStep + 1);
   }
 
   previousClickHandler() {
-    this.stepper.selected.completed = false;
-    this.stepper.previous();
+    this.retroService.updateRetroCurrentSteop(this.retroKey, this.retro$.value.currentStep - 1);
   }
 }

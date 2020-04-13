@@ -50,6 +50,7 @@ export class OverviewComponent implements OnInit {
         const sprintTitle = (result as StartNewRetroDialogData).sprintTitle;
         const retroKey = this.retroService.pushRetro({
           title: sprintTitle,
+          currentStep: 0,
         });
 
         this.generateMockData(retroKey);

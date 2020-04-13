@@ -1,10 +1,10 @@
-<p>{{ retro?.value.title }}</p>
+<p>{{ retro$?.value.title }}</p>
 <mat-horizontal-stepper #stepper>
-  <mat-step [stepControl]="startFormGroup">
+  <mat-step [stepControl]="startFormGroup" completed="false">
     <ng-template matStepLabel>Start</ng-template>
     <app-collection-step [type]="'start'" [retroKey]="retroKey" (next)="nextClickHandler()"></app-collection-step>
   </mat-step>
-  <mat-step [stepControl]="keepFormGroup">
+  <mat-step [stepControl]="keepFormGroup" completed="false">
     <ng-template matStepLabel>Keep</ng-template>
     <app-collection-step
       [type]="'keep'"
@@ -13,7 +13,7 @@
       (previous)="previousClickHandler()"
     ></app-collection-step>
   </mat-step>
-  <mat-step [stepControl]="stopFormGroup">
+  <mat-step [stepControl]="stopFormGroup" completed="false">
     <ng-template matStepLabel>Stop</ng-template>
     <app-collection-step
       [type]="'stop'"
@@ -22,7 +22,7 @@
       (previous)="previousClickHandler()"
     ></app-collection-step>
   </mat-step>
-  <mat-step [stepControl]="consolidateFormGroup">
+  <mat-step [stepControl]="consolidateFormGroup" completed="false">
     <ng-template matStepLabel>Consolidate</ng-template>
     <app-consolidate-step
       [retroKey]="retroKey"
@@ -30,7 +30,7 @@
       (previous)="previousClickHandler()"
     ></app-consolidate-step>
   </mat-step>
-  <mat-step [stepControl]="rankFormGroup">
+  <mat-step [stepControl]="rankFormGroup" completed="false">
     <ng-template matStepLabel>Vote</ng-template>
     <app-vote-step [retroKey]="retroKey" (previous)="previousClickHandler()"></app-vote-step>
   </mat-step>
