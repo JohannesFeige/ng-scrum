@@ -29,6 +29,8 @@ const getTopicsPath = (type: 'start' | 'keep' | 'stop') => {
 })
 export class RetroService {
   retrosRef: AngularFireList<Retro>;
+  currentRetroKey$: BehaviorSubject<string> = new BehaviorSubject(null);
+
   constructor(private repo: AngularFireDatabase, private cipher: CipherService) {
     this.retrosRef = repo.list<Retro>(retrosPath);
   }

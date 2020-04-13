@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -11,7 +11,7 @@ import { MatStepper } from '@angular/material/stepper';
   templateUrl: './retro.component.html',
   styleUrls: ['./retro.component.scss'],
 })
-export class RetroComponent implements OnInit {
+export class RetroComponent implements OnInit, OnDestroy {
   @ViewChild('stepper') private stepper: MatStepper;
 
   retro$: BehaviorSubject<Retro>;
@@ -28,6 +28,7 @@ export class RetroComponent implements OnInit {
     this.initForm();
 
     this.retroKey = this.route.snapshot.paramMap.get('key');
+    this.retroService.currentRetroKey$.next(this.retroKey);
     this.retro$ = this.retroService.getRetro(this.retroKey);
 
     this.retro$.subscribe((value) => {
@@ -35,6 +36,10 @@ export class RetroComponent implements OnInit {
         this.stepper.selectedIndex = value.currentStep;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.retroService.currentRetroKey$.next(null);
   }
 
   private initForm() {

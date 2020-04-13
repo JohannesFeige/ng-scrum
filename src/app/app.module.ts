@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { environment } from 'src/environments/environment';
 import { HeaderComponent } from './components/header/header.component';
 
@@ -25,6 +26,7 @@ import { HeaderComponent } from './components/header/header.component';
     MatButtonModule,
     MatDialogModule,
     MatIconModule,
+    MatMenuModule,
     MatToolbarModule,
     RetroModule,
     AppRoutingModule,

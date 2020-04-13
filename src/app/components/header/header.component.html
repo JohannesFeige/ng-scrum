@@ -1,8 +1,18 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <div>
-      <a mat-button [routerLink]="'/'"> <mat-icon>home</mat-icon> Home </a>
-      <a mat-button [routerLink]="'/retro'"> Retro </a>
-    </div>
+    <a mat-button [routerLink]="'/'"> <mat-icon>home</mat-icon> Home </a>
+    <a mat-button [routerLink]="'/retro'"> Retro </a>
+    <span class="spacer"></span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-button *ngIf="retroSecret; else missingRetroSecret" (click)="copySecretToClipboard()">
+        Copy retro secret
+      </button>
+      <ng-template #missingRetroSecret>
+        <span>No current retro</span>
+      </ng-template>
+    </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
