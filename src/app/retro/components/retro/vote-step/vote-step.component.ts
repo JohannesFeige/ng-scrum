@@ -3,6 +3,7 @@ import { BehaviorSubject, combineLatest } from 'rxjs';
 import { Topic, Vote } from 'src/app/retro/models/topic.model';
 import { RetroService } from 'src/app/retro/services/retro.service';
 import { map } from 'rxjs/operators';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-vote-step',
@@ -21,10 +22,10 @@ export class VoteStepComponent implements OnInit {
   keeps$: BehaviorSubject<Topic[]>;
   stops$: BehaviorSubject<Topic[]>;
   topics$: BehaviorSubject<Topic[]> = new BehaviorSubject([]);
-  constructor(private retroService: RetroService) {}
+  constructor(private retroService: RetroService, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userKey = 'foo';
+    this.userKey = this.userService.user.key;
 
     this.starts$ = this.retroService.getActiveTopics(this.retroKey, 'start');
     this.keeps$ = this.retroService.getActiveTopics(this.retroKey, 'keep');
@@ -37,15 +38,12 @@ export class VoteStepComponent implements OnInit {
       )
       .subscribe({
         complete: () => {
-          console.log('complete');
           return this.topics$.complete();
         },
         error: (x) => {
-          console.log('error', x);
           return this.topics$.error(x);
         },
         next: (x) => {
-          console.log('next', x);
           return this.topics$.next(x);
         },
       });
