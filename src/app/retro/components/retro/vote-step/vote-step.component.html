@@ -7,11 +7,22 @@
   <div fxLayout="row" fxFlex="1 1 90%" fxLayoutGap="48px">
     <div fxLayout="row" fxFlex="1 1 25%">
       <div fxLayout="column" fxFlex="1 1 100%" fxLayoutGap="8px" class="hot-votes-wrapper">
-        <h2>Hot votes</h2>
-        <div *ngFor="let topic of topics$ | async; trackBy: trackTopic" class="topic">
-          <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between start">
-            <span>{{ topic.topic }} </span>
-            <span>({{ topic.votes?.length }})</span>
+        <div>
+          <h2>Hot votes</h2>
+          <div *ngFor="let topic of getHotTopics() | async; trackBy: trackTopic" class="topic">
+            <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between start">
+              <span>{{ topic.topic }} </span>
+              <span>({{ topic.votes?.length }})</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2>Warm votes</h2>
+          <div *ngFor="let topic of getWarmTopics() | async; trackBy: trackTopic" class="topic">
+            <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between start">
+              <span>{{ topic.topic }} </span>
+              <span>({{ topic.votes?.length }})</span>
+            </div>
           </div>
         </div>
       </div>

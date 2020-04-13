@@ -4,6 +4,7 @@ export type Topic = {
   topic: string;
   type: TopicType;
   votes: Vote[];
+  isHot?: boolean;
 };
 
 export type Vote = {

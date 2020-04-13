@@ -7,6 +7,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class StartNewRetroDialogComponent implements OnInit {
   sprintTitle: string;
+  votesPerUser: number;
+  maxTopics: number;
   constructor(
     public dialogRef: MatDialogRef<StartNewRetroDialogComponent, StartNewRetroDialogResult>,
     @Inject(MAT_DIALOG_DATA) private data: StartNewRetroDialogData
@@ -20,13 +22,21 @@ export class StartNewRetroDialogComponent implements OnInit {
     if (this.sprintTitle) {
       this.dialogRef.close({
         sprintTitle: this.sprintTitle,
+        votesPerUser: Number.parseInt(this.votesPerUser.toString(), 10),
+        maxTopics: Number.parseInt(this.maxTopics.toString(), 10),
       });
     }
+  }
+
+  canSubmit() {
+    return this.sprintTitle && this.votesPerUser > 0 && this.maxTopics > 0;
   }
 }
 
 export type StartNewRetroDialogData = {
   sprintTitle: string;
+  votesPerUser: number;
+  maxTopics: number;
 };
 
 export type StartNewRetroDialogResult = undefined | 'cancel' | StartNewRetroDialogData;

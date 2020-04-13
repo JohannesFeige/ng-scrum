@@ -16,7 +16,8 @@ export class VoteStepComponent implements OnInit {
   @Output() previous = new EventEmitter();
 
   userKey: string;
-  maxVotes = 5;
+  votesPerUser = 5;
+  maxTopics = 5;
 
   starts$: BehaviorSubject<Topic[]>;
   keeps$: BehaviorSubject<Topic[]>;
@@ -31,10 +32,36 @@ export class VoteStepComponent implements OnInit {
     this.keeps$ = this.retroService.getActiveTopics(this.retroKey, 'keep');
     this.stops$ = this.retroService.getActiveTopics(this.retroKey, 'stop');
 
+    this.retroService.getRetro(this.retroKey).subscribe((retro) => {
+      this.votesPerUser = retro.votesPerUser;
+      this.maxTopics = retro.maxTopics;
+
+      this.combineTopics();
+    });
+  }
+
+  private combineTopics() {
     combineLatest([this.starts$, this.stops$, this.keeps$])
       .pipe(
         map(([start, keep, stop]) => [...start, ...keep, ...stop]),
-        map((topics) => topics.sort((a, b) => b.votes.length - a.votes.length))
+        map((topics) => topics.filter((x) => x.votes.length)),
+        map((topics) => topics.sort((a, b) => b.votes.length - a.votes.length)),
+        map((topics) => {
+          const hotTopics: Topic[] = [];
+          let minimumVotes = 0;
+
+          topics.forEach((topic) => {
+            if (hotTopics.length < this.maxTopics || topic.votes.length >= minimumVotes) {
+              topic.isHot = true;
+              hotTopics.push(topic);
+              minimumVotes = topic.votes.length;
+            } else {
+              topic.isHot = false;
+            }
+          });
+
+          return topics;
+        })
       )
       .subscribe({
         complete: () => {
@@ -47,6 +74,14 @@ export class VoteStepComponent implements OnInit {
           return this.topics$.next(x);
         },
       });
+  }
+
+  getHotTopics() {
+    return this.topics$.pipe(map((topics) => topics.filter((topic) => topic.isHot)));
+  }
+
+  getWarmTopics() {
+    return this.topics$.pipe(map((topics) => topics.filter((topic) => !topic.isHot)));
   }
 
   pushVote(topic: Topic) {
@@ -73,7 +108,7 @@ export class VoteStepComponent implements OnInit {
       .reduce((acc, topic) => acc.concat(...topic.votes), [] as Vote[])
       .filter((votes) => votes.user === this.userKey).length;
 
-    return this.maxVotes - votesCount;
+    return this.votesPerUser - votesCount;
   }
 
   canPullVote(topic: Topic) {

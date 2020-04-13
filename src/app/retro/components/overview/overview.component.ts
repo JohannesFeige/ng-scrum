@@ -16,9 +16,6 @@ import {
   AlertDialogResult,
 } from 'src/app/components/alert-dialog/alert-dialog.component';
 import { TopicType, Topic } from '../../models/topic.model';
-import { Start } from '../../models/start.model';
-import { Keep } from '../../models/keep.model';
-import { Stop } from '../../models/stop.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -53,10 +50,11 @@ export class OverviewComponent implements OnInit {
           return;
         }
 
-        const sprintTitle = (result as StartNewRetroDialogData).sprintTitle;
         const retroKey = this.retroService.pushRetro({
-          title: sprintTitle,
+          title: result.sprintTitle,
           currentStep: 0,
+          votesPerUser: result.votesPerUser,
+          maxTopics: result.maxTopics,
         });
 
         this.generateMockData(retroKey);

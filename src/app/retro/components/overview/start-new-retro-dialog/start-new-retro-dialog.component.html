@@ -5,12 +5,20 @@
       <mat-label>Sprint Title</mat-label>
       <input matInput placeholder="Sprint Title" name="sprintTitle" [(ngModel)]="sprintTitle" cdkFocusInitial />
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>Votes per User</mat-label>
+      <input type="number" matInput placeholder="Votes per User" name="votesPerUser" [(ngModel)]="votesPerUser" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Max Topics</mat-label>
+      <input type="number" matInput placeholder="Max Topics" name="maxTopics" [(ngModel)]="maxTopics" />
+    </mat-form-field>
   </div>
   <div mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="'cancel'" color="primary">
       Cancel
     </button>
-    <button mat-button type="submit" color="primary" [disabled]="!sprintTitle">
+    <button mat-button type="submit" color="primary" [disabled]="!canSubmit()">
       Start
     </button>
   </div>
