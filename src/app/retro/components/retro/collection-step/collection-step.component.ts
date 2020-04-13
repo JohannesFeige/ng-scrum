@@ -34,6 +34,7 @@ export class CollectionStepComponent implements OnInit {
     const topic: Topic = {
       type: this.type,
       topic: this.topic,
+      votes: [],
     };
 
     this.retroService.pushTopic(this.retroKey, topic);

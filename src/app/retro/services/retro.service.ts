@@ -6,7 +6,7 @@ import { AngularFireDatabase, SnapshotAction, AngularFireList } from '@angular/f
 import { map } from 'rxjs/operators';
 import { Keep } from '../models/keep.model';
 import { CipherService } from './cipher.service';
-import { Topic } from '../models/topic.model';
+import { Topic, Vote } from '../models/topic.model';
 
 const retrosPath = 'retros';
 const getRetroPath = (retroKey: string) => `${retrosPath}/${retroKey}`;
@@ -78,21 +78,29 @@ export class RetroService {
   }
 
   getTopics(retroKey: string, topicType: 'start' | 'keep' | 'stop'): BehaviorSubject<Topic[]> {
-    const secret = this.getRetroSecret(retroKey);
+    return this.getAsBehaviouSubjectArray(this.getUnfilteredTopics(retroKey, topicType));
+  }
+
+  getActiveTopics(retroKey: string, topicType: 'start' | 'keep' | 'stop'): BehaviorSubject<Topic[]> {
     return this.getAsBehaviouSubjectArray(
-      this.repo
-        .list<Topic>(getTopicsPath(topicType)(retroKey))
-        .snapshotChanges()
-        .pipe(
-          map((items) => items.map(this.mapSnapshotToObject)),
-          map((topics) =>
-            topics.map((topic) => {
-              topic.topic = this.cipher.decrypt(secret, topic.topic);
-              return topic;
-            })
-          )
-        )
+      this.getUnfilteredTopics(retroKey, topicType).pipe(map((x) => x.filter((topic) => !topic.disabled)))
     );
+  }
+
+  private getUnfilteredTopics(retroKey: string, topicType: 'start' | 'keep' | 'stop'): Observable<Topic[]> {
+    const secret = this.getRetroSecret(retroKey);
+    return this.repo
+      .list<Topic>(getTopicsPath(topicType)(retroKey))
+      .snapshotChanges()
+      .pipe(
+        map((items) => items.map(this.mapSnapshotToTopic)),
+        map((topics) =>
+          topics.map((topic) => {
+            topic.topic = this.cipher.decrypt(secret, topic.topic);
+            return topic;
+          })
+        )
+      );
   }
 
   pushTopic(retroKey: string, topic: Topic): void {
@@ -103,6 +111,14 @@ export class RetroService {
 
   updateTopicDisabled(retroKey: string, topic: Topic): void {
     this.repo.object<Topic>(`${getTopicsPath(topic.type)(retroKey)}/${topic.key}`).update({ disabled: topic.disabled });
+  }
+
+  pushTopicVote(retroKey: string, topic: Topic, vote: Vote): void {
+    this.repo.list(`${getTopicsPath(topic.type)(retroKey)}/${topic.key}/votes`).push(vote);
+  }
+
+  pullTopicVote(retroKey: string, topic: Topic, vote: Vote): void {
+    this.repo.object(`${getTopicsPath(topic.type)(retroKey)}/${topic.key}/votes/${vote.key}`).remove();
   }
 
   setRetroSecret(retroKey: string, retroSecret: string): void {
@@ -146,6 +162,11 @@ export class RetroService {
     return this.mapToRetro(retro);
   };
 
+  private mapSnapshotToTopic = (snapshotAction: SnapshotAction<Topic>): Topic => {
+    const topic = this.mapSnapshotToObject(snapshotAction);
+    return this.mapToTopic(topic);
+  };
+
   private mapToRetro(retro: Retro): Retro {
     const keep: Keep[] = [];
     for (const key in retro.keep) {
@@ -155,5 +176,16 @@ export class RetroService {
       }
     }
     return { ...retro, keep };
+  }
+
+  private mapToTopic(topic: Topic): Topic {
+    const votes: Vote[] = [];
+    for (const key in topic.votes) {
+      if (topic.votes.hasOwnProperty(key)) {
+        const voteData = (topic.votes[key] as unknown) as Vote;
+        votes.push({ key, ...voteData });
+      }
+    }
+    return { ...topic, votes };
   }
 }

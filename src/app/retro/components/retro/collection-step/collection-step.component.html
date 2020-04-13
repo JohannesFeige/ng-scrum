@@ -1,11 +1,11 @@
 <h1>{{ title }}</h1>
-<div fxLayout="row">
+<div fxLayout="row" fxLayoutGap="24px">
   <div fxLayout="column" fxFlex="1 1 5%" fxLayoutAlign="center center">
     <button *ngIf="hasPrevious()" mat-mini-fab color="primary" (click)="previous.emit()">
       <mat-icon inline="false">arrow_back_ios</mat-icon>
     </button>
   </div>
-  <div fxLayout="row" fxFlex="1 1 90%">
+  <div fxLayout="row" fxFlex="1 1 90%" fxLayoutGap="24px">
     <div fxFlex="1 1 75%">
       <div fxLayout="row" fxLayoutGap="8px">
         <div class="topic" *ngFor="let topic of topics | async">

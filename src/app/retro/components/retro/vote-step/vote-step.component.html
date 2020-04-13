@@ -1,0 +1,63 @@
+<div fxLayout="row">
+  <div fxLayout="column" fxFlex="1 1 5%" fxLayoutAlign="center center">
+    <button *ngIf="hasPrevious()" mat-mini-fab color="primary" (click)="previous.emit()">
+      <mat-icon inline="false">arrow_back_ios</mat-icon>
+    </button>
+  </div>
+  <div fxLayout="row" fxFlex="1 1 90%" fxLayoutGap="48px">
+    <div fxLayout="row" fxFlex="1 1 25%">
+      <div fxLayout="column" fxFlex="1 1 100%" fxLayoutGap="8px" class="hot-votes-wrapper">
+        <h2>Hot votes</h2>
+        <div *ngFor="let topic of topics$ | async; trackBy: trackTopic" class="topic">
+          <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between start">
+            <span>{{ topic.topic }} </span>
+            <span>({{ topic.votes?.length }})</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="column" fxFlex="1 1 75%">
+      <h2>Your votes left: {{ getVotesLeft() }}</h2>
+      <div fxLayout="row" fxLayoutGap="24px">
+        <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
+          <h2 class="start">Start</h2>
+          <div *ngFor="let start of starts$ | async; trackBy: trackTopic" class="topic">
+            <ng-container *ngTemplateOutlet="voteTopic; context: { $implicit: start }"></ng-container>
+          </div>
+        </div>
+        <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
+          <h2 class="keep">Keep</h2>
+          <div *ngFor="let keep of keeps$ | async; trackBy: trackTopic" class="topic">
+            <ng-container *ngTemplateOutlet="voteTopic; context: { $implicit: keep }"></ng-container>
+          </div>
+        </div>
+        <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
+          <h2 class="stop">Stop</h2>
+          <div *ngFor="let stop of stops$ | async; trackBy: trackTopic" class="topic">
+            <ng-container *ngTemplateOutlet="voteTopic; context: { $implicit: stop }"></ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="1 1 5%" fxLayoutAlign="center center">
+    <button *ngIf="hasNext()" mat-mini-fab color="primary" (click)="next.emit()">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+  </div>
+</div>
+
+<ng-template #voteTopic let-topic>
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+    <span>{{ topic.topic }} </span>
+    <div class="vote-action-wrapper" fxLayout="row" fxLayoutAlign="space-between center">
+      <button mat-icon-button color="primary" (click)="pullVote(topic)" [disabled]="!canPullVote(topic)">
+        <mat-icon>indeterminate_check_box</mat-icon>
+      </button>
+      <span>({{ topic.votes?.length }})</span>
+      <button mat-icon-button color="primary" (click)="pushVote(topic)" [disabled]="!getVotesLeft()">
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </div>
+  </div>
+</ng-template>

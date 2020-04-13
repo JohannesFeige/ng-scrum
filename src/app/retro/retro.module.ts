@@ -15,7 +15,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { StartNewRetroDialogComponent } from './components/overview/start-new-retro-dialog/start-new-retro-dialog.component';
 import { RetroComponent } from './components/retro/retro.component';
 import { ConsolidateStepComponent } from './components/retro/consolidate-step/consolidate-step.component';
-import { RankStepComponent } from './components/retro/rank-step/rank-step.component';
+import { VoteStepComponent } from './components/retro/vote-step/vote-step.component';
 import { CollectionStepComponent } from './components/retro/collection-step/collection-step.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -26,7 +26,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     StartNewRetroDialogComponent,
     RetroComponent,
     ConsolidateStepComponent,
-    RankStepComponent,
+    VoteStepComponent,
     CollectionStepComponent,
   ],
   imports: [

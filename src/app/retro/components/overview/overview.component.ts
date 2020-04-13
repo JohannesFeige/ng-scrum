@@ -83,6 +83,7 @@ export class OverviewComponent implements OnInit {
         const topic: Topic = {
           type,
           topic: `Important ${type} Topic ${index}`,
+          votes: [],
         };
 
         result.push(topic);

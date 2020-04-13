@@ -31,7 +31,7 @@
     ></app-consolidate-step>
   </mat-step>
   <mat-step [stepControl]="rankFormGroup">
-    <ng-template matStepLabel>Rank</ng-template>
-    <app-rank-step (previous)="previousClickHandler()"></app-rank-step>
+    <ng-template matStepLabel>Vote</ng-template>
+    <app-vote-step [retroKey]="retroKey" (previous)="previousClickHandler()"></app-vote-step>
   </mat-step>
 </mat-horizontal-stepper>
