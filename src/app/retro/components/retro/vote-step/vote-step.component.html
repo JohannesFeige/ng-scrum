@@ -7,7 +7,7 @@
   <div fxLayout="row" fxFlex="1 1 90%" fxLayoutGap="48px">
     <div fxLayout="row" fxFlex="1 1 25%">
       <div fxLayout="column" fxFlex="1 1 100%" fxLayoutGap="24px" class="hot-votes-wrapper">
-        <div fxLayout="column" fxFlex="1 1 100%" fxLayoutGap="8px">
+        <div fxLayout="column" fxLayoutGap="8px">
           <h2>Hot votes</h2>
           <div *ngFor="let topic of getHotTopics() | async; trackBy: trackTopic" class="topic">
             <div
@@ -23,7 +23,7 @@
             </div>
           </div>
         </div>
-        <div fxLayout="column" fxFlex="1 1 100%" fxLayoutGap="8px">
+        <div fxLayout="column" fxLayoutGap="8px">
           <h2>Warm votes</h2>
           <div *ngFor="let topic of getWarmTopics() | async; trackBy: trackTopic" class="topic">
             <div
