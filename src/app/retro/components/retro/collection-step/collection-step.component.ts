@@ -3,6 +3,7 @@ import { FormGroupDirective } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { Topic, TopicType } from '../../../models/topic.model';
 import { RetroService } from '../../../services/retro.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-collection-step',
@@ -23,7 +24,7 @@ export class CollectionStepComponent implements OnInit {
   topic: string;
   topics: BehaviorSubject<Topic[]>;
 
-  constructor(private retroService: RetroService) {}
+  constructor(private retroService: RetroService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.init();
@@ -47,6 +48,10 @@ export class CollectionStepComponent implements OnInit {
 
   hasPrevious() {
     return this.previous.observers.length;
+  }
+
+  isAdmin() {
+    return this.userService.isAdmin();
   }
 
   private init() {

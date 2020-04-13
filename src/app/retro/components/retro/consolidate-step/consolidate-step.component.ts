@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Topic } from 'src/app/retro/models/topic.model';
 import { RetroService } from 'src/app/retro/services/retro.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-consolidate-step',
@@ -16,7 +17,7 @@ export class ConsolidateStepComponent implements OnInit {
   starts$: BehaviorSubject<Topic[]>;
   keeps$: BehaviorSubject<Topic[]>;
   stops$: BehaviorSubject<Topic[]>;
-  constructor(private retroService: RetroService) {}
+  constructor(private retroService: RetroService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.starts$ = this.retroService.getTopics(this.retroKey, 'start');
@@ -30,6 +31,10 @@ export class ConsolidateStepComponent implements OnInit {
 
   hasPrevious() {
     return this.previous.observers.length;
+  }
+
+  isAdmin() {
+    return this.userService.isAdmin();
   }
 
   toggleTopicDisabled(topic: Topic) {

@@ -80,6 +80,10 @@ export class VoteStepComponent implements OnInit {
     return topic.key;
   }
 
+  isAdmin() {
+    return this.userService.isAdmin();
+  }
+
   hasNext() {
     return this.next.observers.length;
   }

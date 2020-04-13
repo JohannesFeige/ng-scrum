@@ -5,6 +5,8 @@ import { User } from '../models/user';
   providedIn: 'root',
 })
 export class UserService {
+  private adminSecret = 'foo';
+  private currentTyped = '';
   user: User;
   constructor() {
     let userKey = window.localStorage.getItem('userKey');
@@ -16,7 +18,18 @@ export class UserService {
 
     this.user = {
       key: userKey,
+      isAdmin: false,
     };
+
+    window.addEventListener('keyup', this.globalKeypressHandler);
+  }
+
+  isAdmin() {
+    return this.user.isAdmin;
+  }
+
+  private switchToAdmin() {
+    this.user.isAdmin = true;
   }
 
   private generateUserKey() {
@@ -30,4 +43,18 @@ export class UserService {
 
     return key;
   }
+
+  private globalKeypressHandler = (event: KeyboardEvent) => {
+    this.currentTyped += event.key;
+
+    if (this.adminSecret.indexOf(this.currentTyped) < 0) {
+      this.currentTyped = '';
+      return;
+    }
+
+    if (this.adminSecret === this.currentTyped) {
+      this.switchToAdmin();
+      this.currentTyped = '';
+    }
+  };
 }

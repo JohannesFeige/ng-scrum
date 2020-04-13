@@ -1,7 +1,7 @@
 <h1>{{ title }}</h1>
 <div fxLayout="row" fxLayoutGap="24px">
   <div fxLayout="column" fxFlex="1 1 5%" fxLayoutAlign="center center">
-    <button *ngIf="hasPrevious()" mat-mini-fab color="primary" (click)="previous.emit()">
+    <button *ngIf="hasPrevious() && isAdmin()" mat-mini-fab color="primary" (click)="previous.emit()">
       <mat-icon inline="false">arrow_back_ios</mat-icon>
     </button>
   </div>
@@ -20,7 +20,7 @@
     </div>
   </div>
   <div fxFlex="1 1 5%" fxLayoutAlign="center center">
-    <button *ngIf="hasNext()" mat-mini-fab color="primary" (click)="next.emit()">
+    <button *ngIf="hasNext() && isAdmin()" mat-mini-fab color="primary" (click)="next.emit()">
       <mat-icon>arrow_forward_ios</mat-icon>
     </button>
   </div>
