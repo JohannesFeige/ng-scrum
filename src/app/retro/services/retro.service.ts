@@ -119,6 +119,10 @@ export class RetroService {
     this.repo.object<Topic>(`${getTopicsPath(topic.type)(retroKey)}/${topic.key}`).update({ disabled: topic.disabled });
   }
 
+  updateTopicResponsible(retroKey: string, topic: Topic, responsible: string): void {
+    this.repo.object<Topic>(`${getTopicsPath(topic.type)(retroKey)}/${topic.key}`).update({ responsible });
+  }
+
   pushTopicVote(retroKey: string, topic: Topic, vote: Vote): void {
     this.repo.list(`${getTopicsPath(topic.type)(retroKey)}/${topic.key}/votes`).push(vote);
   }

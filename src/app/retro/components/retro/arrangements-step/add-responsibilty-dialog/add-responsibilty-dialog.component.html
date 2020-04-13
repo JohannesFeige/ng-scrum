@@ -1,0 +1,17 @@
+<h1>Responsible Person</h1>
+<form (ngSubmit)="submitHandler()">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Responsible Person</mat-label>
+      <input name="responsible" [(ngModel)]="responsible" matInput placeholder="Responsible Person" cdkFocusInitial />
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="'cancel'" color="primary">
+      Cancel
+    </button>
+    <button mat-button type="submit" color="primary" [disabled]="!responsible">
+      Enter
+    </button>
+  </div>
+</form>

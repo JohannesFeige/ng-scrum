@@ -18,6 +18,8 @@ import { ConsolidateStepComponent } from './components/retro/consolidate-step/co
 import { VoteStepComponent } from './components/retro/vote-step/vote-step.component';
 import { CollectionStepComponent } from './components/retro/collection-step/collection-step.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ArrangementsStepComponent } from './components/retro/arrangements-step/arrangements-step.component';
+import { AddResponsibiltyDialogComponent } from './components/retro/arrangements-step/add-responsibilty-dialog/add-responsibilty-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ConsolidateStepComponent,
     VoteStepComponent,
     CollectionStepComponent,
+    ArrangementsStepComponent,
+    AddResponsibiltyDialogComponent,
   ],
   imports: [
     CommonModule,

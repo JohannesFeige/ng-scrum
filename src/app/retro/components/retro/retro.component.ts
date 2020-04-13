@@ -20,6 +20,7 @@ export class RetroComponent implements OnInit, OnDestroy {
   stopFormGroup: FormGroup;
   consolidateFormGroup: FormGroup;
   rankFormGroup: FormGroup;
+  arrangementsFormGroup: FormGroup;
 
   retroKey: string;
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private retroService: RetroService) {}
@@ -57,6 +58,9 @@ export class RetroComponent implements OnInit, OnDestroy {
     });
     this.rankFormGroup = this.fb.group({
       rankCtrl: [''],
+    });
+    this.arrangementsFormGroup = this.fb.group({
+      arangementsCtrl: [''],
     });
   }
 

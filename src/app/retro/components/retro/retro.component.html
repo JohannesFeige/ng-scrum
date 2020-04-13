@@ -32,6 +32,14 @@
   </mat-step>
   <mat-step [stepControl]="rankFormGroup" completed="false">
     <ng-template matStepLabel>Vote</ng-template>
-    <app-vote-step [retroKey]="retroKey" (previous)="previousClickHandler()"></app-vote-step>
+    <app-vote-step
+      [retroKey]="retroKey"
+      (next)="nextClickHandler()"
+      (previous)="previousClickHandler()"
+    ></app-vote-step>
+  </mat-step>
+  <mat-step [stepControl]="arrangementsFormGroup" completed="false">
+    <ng-template matStepLabel>Arrangements</ng-template>
+    <app-arrangements-step [retroKey]="retroKey" (previous)="previousClickHandler()"></app-arrangements-step>
   </mat-step>
 </mat-horizontal-stepper>

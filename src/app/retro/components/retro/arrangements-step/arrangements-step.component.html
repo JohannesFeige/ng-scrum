@@ -1,0 +1,64 @@
+<div fxLayout="row">
+  <div fxLayout="column" fxFlex="1 1 5%" fxLayoutAlign="center center">
+    <button *ngIf="hasPrevious() && isAdmin()" mat-mini-fab color="primary" (click)="previous.emit()">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+  </div>
+  <div fxLayout="row" fxFlex="1 1 90%" fxLayoutGap="24px">
+    <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
+      <h2>Hot</h2>
+      <div
+        *ngFor="let topic of getHotTopics() | async"
+        fxLayout="column"
+        fxLayoutGap="4px"
+        class="topic"
+        [class.start]="topic.type === 'start'"
+        [class.keep]="topic.type === 'keep'"
+        [class.stop]="topic.type === 'stop'"
+        (dblclick)="addResonsible(topic)"
+      >
+        <span>{{ topic.topic }}</span>
+        <span>Votes: {{ topic.votes.length }}</span>
+        <span *ngIf="topic.responsible">Responsible: {{ topic.responsible }}</span>
+      </div>
+    </div>
+    <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
+      <h2>Warm</h2>
+      <div
+        *ngFor="let topic of getWarmTopics() | async"
+        fxLayout="column"
+        fxLayoutGap="4px"
+        class="topic"
+        [class.start]="topic.type === 'start'"
+        [class.keep]="topic.type === 'keep'"
+        [class.stop]="topic.type === 'stop'"
+        (dblclick)="addResonsible(topic)"
+      >
+        <span>{{ topic.topic }}</span>
+        <span>Votes: {{ topic.votes.length }}</span>
+        <span *ngIf="topic.responsible">Responsible: {{ topic.responsible }}</span>
+      </div>
+    </div>
+    <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
+      <h2>Cold</h2>
+      <div
+        *ngFor="let topic of getColdTopics() | async"
+        fxLayout="column"
+        fxLayoutGap="4px"
+        class="topic"
+        [class.start]="topic.type === 'start'"
+        [class.keep]="topic.type === 'keep'"
+        [class.stop]="topic.type === 'stop'"
+        (dblclick)="addResonsible(topic)"
+      >
+        <span>{{ topic.topic }}</span>
+        <span *ngIf="topic.responsible">Responsible: {{ topic.responsible }}</span>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="1 1 5%" fxLayoutAlign="center center">
+    <button *ngIf="hasNext() && isAdmin()" mat-mini-fab color="primary" (click)="next.emit()">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+  </div>
+</div>
