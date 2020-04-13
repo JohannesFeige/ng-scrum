@@ -64,6 +64,10 @@ export class VoteStepComponent implements OnInit {
     this.retroService.pullTopicVote(this.retroKey, topic, vote);
   }
 
+  getUserVotesAmount(topic: Topic) {
+    return topic.votes.filter((x) => x.user === this.userKey).length;
+  }
+
   getVotesLeft() {
     const votesCount = this.topics$.value
       .reduce((acc, topic) => acc.concat(...topic.votes), [] as Vote[])

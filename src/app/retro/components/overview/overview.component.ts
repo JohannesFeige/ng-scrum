@@ -19,6 +19,7 @@ import { TopicType, Topic } from '../../models/topic.model';
 import { Start } from '../../models/start.model';
 import { Keep } from '../../models/keep.model';
 import { Stop } from '../../models/stop.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-overview',
@@ -27,7 +28,12 @@ import { Stop } from '../../models/stop.model';
 })
 export class OverviewComponent implements OnInit {
   retros$: BehaviorSubject<Retro[]>;
-  constructor(private retroService: RetroService, private dialog: MatDialog, private router: Router) {}
+  constructor(
+    private retroService: RetroService,
+    private userService: UserService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.retros$ = this.retroService.getRetros();
@@ -75,6 +81,10 @@ export class OverviewComponent implements OnInit {
         }
         this.retroService.deleteRetro(retroKey);
       });
+  }
+
+  isAdmin() {
+    return this.userService.isAdmin();
   }
 
   private generateMockData(retroKey: string) {

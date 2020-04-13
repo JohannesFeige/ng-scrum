@@ -54,7 +54,7 @@
       <button mat-icon-button color="primary" (click)="pullVote(topic)" [disabled]="!canPullVote(topic)">
         <mat-icon>indeterminate_check_box</mat-icon>
       </button>
-      <span>({{ topic.votes?.length }})</span>
+      <span>({{ getUserVotesAmount(topic) }})</span>
       <button mat-icon-button color="primary" (click)="pushVote(topic)" [disabled]="!getVotesLeft()">
         <mat-icon>add_box</mat-icon>
       </button>
