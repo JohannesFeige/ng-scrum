@@ -109,6 +109,10 @@ export class ArrangementsStepComponent implements OnInit {
     return this.topics$.pipe(map((topics) => topics.filter((topic) => !topic.votes.length)));
   }
 
+  trackTopic(topic: Topic): string {
+    return topic.key;
+  }
+
   hasNext() {
     return this.next.observers.length;
   }

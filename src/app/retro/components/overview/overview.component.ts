@@ -57,8 +57,6 @@ export class OverviewComponent implements OnInit {
           maxTopics: result.maxTopics,
         });
 
-        this.generateMockData(retroKey);
-
         this.router.navigate([`retro/${retroKey}`]);
       });
   }
@@ -83,25 +81,5 @@ export class OverviewComponent implements OnInit {
 
   isAdmin() {
     return this.userService.isAdmin();
-  }
-
-  private generateMockData(retroKey: string) {
-    function generateTopic(type: TopicType, amount: number): Topic[] {
-      const result: Topic[] = [];
-      for (let index = 1; index <= amount; index++) {
-        const topic: Topic = {
-          type,
-          topic: `Important ${type} Topic ${index}`,
-          votes: [],
-        };
-
-        result.push(topic);
-      }
-      return result;
-    }
-
-    generateTopic('start', 4).forEach((topic) => this.retroService.pushTopic(retroKey, topic));
-    generateTopic('keep', 7).forEach((topic) => this.retroService.pushTopic(retroKey, topic));
-    generateTopic('stop', 6).forEach((topic) => this.retroService.pushTopic(retroKey, topic));
   }
 }

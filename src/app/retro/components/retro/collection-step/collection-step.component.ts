@@ -32,6 +32,10 @@ export class CollectionStepComponent implements OnInit {
   }
 
   topicSubmitHandler() {
+    this.submit();
+  }
+
+  private submit() {
     const topic: Topic = {
       type: this.type,
       topic: this.topic,
@@ -65,6 +69,12 @@ export class CollectionStepComponent implements OnInit {
       case 'stop':
         this.title = 'Stop';
         break;
+    }
+  }
+
+  keyPressHandler(event: KeyboardEvent) {
+    if (this.topic && event.key === 'Enter' && event.ctrlKey) {
+      this.submit();
     }
   }
 }

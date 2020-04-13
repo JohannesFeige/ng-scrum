@@ -30,7 +30,15 @@
   <form #form="ngForm" (submit)="topicSubmitHandler()">
     <mat-form-field class="form-element">
       <mat-label>Topic</mat-label>
-      <textarea name="topic" matInput placeholder="Topic" [(ngModel)]="topic" cdkFocusInitial rows="5"></textarea>
+      <textarea
+        name="topic"
+        matInput
+        placeholder="Topic"
+        [(ngModel)]="topic"
+        cdkFocusInitial
+        rows="5"
+        (keydown)="keyPressHandler($event)"
+      ></textarea>
     </mat-form-field>
     <div class="form-element">
       <button mat-raised-button color="primary" type="submit" [disabled]="!topic">Submit</button>

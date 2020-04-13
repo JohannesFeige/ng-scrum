@@ -8,7 +8,7 @@
     <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
       <h2>Hot</h2>
       <div
-        *ngFor="let topic of getHotTopics() | async"
+        *ngFor="let topic of getHotTopics() | async; trackBy: trackTopic"
         fxLayout="column"
         fxLayoutGap="4px"
         class="topic"
@@ -25,7 +25,7 @@
     <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
       <h2>Warm</h2>
       <div
-        *ngFor="let topic of getWarmTopics() | async"
+        *ngFor="let topic of getWarmTopics() | async; trackBy: trackTopic"
         fxLayout="column"
         fxLayoutGap="4px"
         class="topic"
@@ -42,7 +42,7 @@
     <div fxLayout="column" fxFlex="1 1 33%" fxLayoutGap="8px">
       <h2>Cold</h2>
       <div
-        *ngFor="let topic of getColdTopics() | async"
+        *ngFor="let topic of getColdTopics() | async; trackBy: trackTopic"
         fxLayout="column"
         fxLayoutGap="4px"
         class="topic"
