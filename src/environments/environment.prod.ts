@@ -1,7 +1,8 @@
-import { apiKey, appId, messagingSenderId } from './sensitive';
+import { apiKey, appId, messagingSenderId, adminSecret } from './sensitive';
 
 export const environment = {
   production: true,
+  adminSecret,
   firebase: {
     apiKey,
     authDomain: 'ng-scrum.firebaseapp.com',

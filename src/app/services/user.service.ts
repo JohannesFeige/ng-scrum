@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private adminSecret = 'foo';
+  private adminSecret = environment.adminSecret;
   private currentTyped = '';
   user: User;
   constructor() {
@@ -49,7 +51,6 @@ export class UserService {
 
     if (this.adminSecret.indexOf(this.currentTyped) < 0) {
       this.currentTyped = '';
-      return;
     }
 
     if (this.adminSecret === this.currentTyped) {
