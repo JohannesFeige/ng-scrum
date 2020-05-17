@@ -38,7 +38,9 @@ export class ConsolidateStepComponent implements OnInit {
   }
 
   toggleTopicDisabled(topic: Topic) {
-    topic.disabled = !topic.disabled;
-    this.retroService.updateTopicDisabled(this.retroKey, topic);
+    if (this.isAdmin()) {
+      topic.disabled = !topic.disabled;
+      this.retroService.updateTopicDisabled(this.retroKey, topic);
+    }
   }
 }
