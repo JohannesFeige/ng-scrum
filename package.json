@@ -26,6 +26,8 @@
     "@types/crypto-js": "^3.1.44",
     "crypto-js": "^4.0.0",
     "firebase": "^7.13.2",
+    "masonry-layout": "^4.2.2",
+    "ngx-masonry": "^9.1.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

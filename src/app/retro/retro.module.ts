@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
+import { NgxMasonryModule } from 'ngx-masonry';
 import { StartNewRetroDialogComponent } from './components/overview/start-new-retro-dialog/start-new-retro-dialog.component';
 import { RetroComponent } from './components/retro/retro.component';
 import { ConsolidateStepComponent } from './components/retro/consolidate-step/consolidate-step.component';
@@ -48,6 +49,7 @@ import { AddResponsibiltyDialogComponent } from './components/retro/arrangements
     MatInputModule,
     MatListModule,
     MatStepperModule,
+    NgxMasonryModule,
   ],
   providers: [
     {
